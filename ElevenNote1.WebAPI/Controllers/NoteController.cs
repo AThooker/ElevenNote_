@@ -13,12 +13,21 @@ namespace ElevenNote1.WebAPI.Controllers
     [Authorize]
     public class NoteController : ApiController
     {
+        //READ
         public IHttpActionResult Get()
         {
             NoteService noteService = CreateNoteService();
             var notes = noteService.GetNotes();
             return Ok(notes);
         }
+        //READ
+        public IHttpActionResult Get(int id)
+        {
+            NoteService noteService = CreateNoteService();
+            var note = noteService = CreateNoteService();
+            return Ok(note);
+        }
+        //CREATE
         public IHttpActionResult Post(NoteCreate note)
         {
             if (!ModelState.IsValid)
@@ -32,11 +41,25 @@ namespace ElevenNote1.WebAPI.Controllers
             return Ok();
 
         }
+        //CREATE
         private NoteService CreateNoteService()
         {
             var userId = Guid.Parse(User.Identity.GetUserId());
             var noteService = new NoteService(userId);
             return noteService;
+        }
+        //UPDATE
+        public IHttpActionResult Put(NoteEdit note)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var service = CreateNoteService();
+
+            if (!service.UpdateNote(note))
+                return InternalServerError();
+
+            return Ok();
         }
     }
 }
