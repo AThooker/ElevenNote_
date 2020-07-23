@@ -14,7 +14,7 @@ namespace ElevenNote.Models
         public string Content { get; set; }
         [Display(Name ="Created")]
         public DateTimeOffset CreatedUtc { get; set; }
-        [Display(Name ="Modified")]
+        [Display(Name = "Modified")]
         public DateTimeOffset? ModifiedUtc { get; set; }
     }
 }
